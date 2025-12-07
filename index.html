@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de Consommation Électrique</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <header>
+            <h1>Suivi de Consommation Électrique</h1>
+        </header>
+        
+        <main>
+            <div class="search-container sticky">
+                <input type="text" id="search-input" placeholder="Rechercher par N° de contrat, N° d'appareil, Numéro, Nom du client...">
+                <button id="search-button">Rechercher</button>
+            </div>
+            
+            <div id="suggestions" class="suggestions-container"></div>
+            
+            <div id="all-customers-section" class="all-customers-section">
+                <!-- All customers will be rendered here -->
+            </div>
+            
+            <div id="customer-detail-section" class="customer-section hidden">
+                <!-- Customer detail will be rendered here -->
+            </div>
+            
+            <div id="no-results" class="no-results hidden">
+                <p>Aucun client trouvé. Veuillez vérifier votre recherche.</p>
+            </div>
+            
+            <div class="instructions">
+                <h2>Instructions</h2>
+                <ul>
+                    <li>Utilisez la barre de recherche pour trouver un client</li>
+                    <li>Entrez la consommation mensuelle en kWh pour les clients basse tension</li>
+                    <li>Pour les clients moyenne tension, entrez les valeurs pour chaque champ spécifique</li>
+                    <li>Les données sont stockées localement dans votre navigateur</li>
+                </ul>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <button class="nav-button active" data-target="home-page">Accueil</button>
+            <button class="nav-button" data-target="import-page">Importer</button>
+            <button class="nav-button" data-target="history-page">Historique</button>
+            <button class="nav-button" id="export-button">Exporter</button>
+        </nav>
+    </div>
+    
+    <!-- Import Page -->
+    <div id="import-page" class="page">
+        <header>
+            <h1>Importer des Données Clients</h1>
+        </header>
+        
+        <main>
+            <div class="import-section">
+                <h2>Charger un fichier Excel/CSV</h2>
+                <p>Le fichier doit contenir les colonnes suivantes : N° de contrat, N° d'appareil, Nom du client, Téléphone (optionnel), Type de client (oui/non pour moyenne tension)</p>
+                <input type="file" id="file-input" accept=".csv,.xlsx,.xls">
+                <button id="import-button">Importer les Données</button>
+                <div id="import-status"></div>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <button class="nav-button" data-target="home-page">Accueil</button>
+            <button class="nav-button active" data-target="import-page">Importer</button>
+            <button class="nav-button" data-target="history-page">Historique</button>
+            <button class="nav-button" id="export-button2">Exporter</button>
+        </nav>
+    </div>
+    
+    <!-- History Page -->
+    <div id="history-page" class="page">
+        <header>
+            <h1>Historique des Consommations</h1>
+        </header>
+        
+        <main>
+            <div id="history-list" class="history-list">
+                <!-- History entries will be rendered here -->
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <button class="nav-button" data-target="home-page">Accueil</button>
+            <button class="nav-button" data-target="import-page">Importer</button>
+            <button class="nav-button active" data-target="history-page">Historique</button>
+            <button class="nav-button" id="export-button3">Exporter</button>
+        </nav>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Confirmer l'enregistrement</h3>
+            <p>Voulez-vous vraiment enregistrer cette consommation ?</p>
+            <div class="modal-buttons">
+                <button id="confirm-cancel" class="btn-secondary">Annuler</button>
+                <button id="confirm-save" class="btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
