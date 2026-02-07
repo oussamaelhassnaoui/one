@@ -50,6 +50,8 @@ const pages = document.querySelectorAll('.page');
 const fileInput = document.getElementById('file-input');
 const importButton = document.getElementById('import-button');
 const importStatus = document.getElementById('import-status');
+const fileInputLabel = document.querySelector('.file-input-label');
+const selectedFileInfo = document.getElementById('selected-file-info');
 
 // History page elements
 const historyList = document.getElementById('history-list');
@@ -95,6 +97,41 @@ function setupEventListeners() {
     
     // Import functionality
     importButton.addEventListener('click', handleFileImport);
+    
+    // File input functionality
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            selectedFileInfo.textContent = `Fichier sélectionné: ${this.files[0].name}`;
+            selectedFileInfo.style.display = 'block';
+        } else {
+            selectedFileInfo.style.display = 'none';
+        }
+    });
+    
+    // Drag and drop functionality
+    fileInputLabel.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('drag-over');
+    });
+    
+    fileInputLabel.addEventListener('dragleave', function() {
+        this.classList.remove('drag-over');
+    });
+    
+    fileInputLabel.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('drag-over');
+        
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            selectedFileInfo.textContent = `Fichier déposé: ${e.dataTransfer.files[0].name}`;
+            selectedFileInfo.style.display = 'block';
+            
+            // Trigger change event manually
+            const event = new Event('change', { bubbles: true });
+            fileInput.dispatchEvent(event);
+        }
+    });
     
     // Modal buttons
     confirmSaveButton.addEventListener('click', saveConsumptionConfirmed);
